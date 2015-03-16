@@ -1,0 +1,24 @@
+- schools = School.all
+
+.users-form-create.well
+  h2.title Create User
+
+  = simple_form_for user, remote: true do |f|
+    = f.input :name
+    = f.input :phone
+
+    ul.nav.nav-tabs
+
+      - schools.each do |s|
+        li : a href="#tab-pane-create-#{s.id}" data-toggle='tab' = s.name
+
+      li : a href="#tab-pane-create-system" data-toggle='tab' System
+
+    .tab-content
+
+      - schools.each do |s|
+        .tab-pane id="tab-pane-create-#{s.id}" = f.association :roles, collection: s.roles, as: :check_boxes
+
+      .tab-pane id="tab-pane-create-system" = f.association :roles, collection: Role.where(name: 'Admin'), as: :check_boxes
+
+    .actions = f.button :submit, class: 'btn-primary'

@@ -1,0 +1,32 @@
+table.table.user data-id=user.id
+
+  thead
+    tr
+      th #
+      th Name
+      th Phone
+      th Roles
+      th Actions
+
+  tbody
+    tr
+      td.id = user.id
+      td.name = user.name
+      td.phone = user.phone
+
+      td.roles
+        table.table
+
+          thead
+            tr
+              th #
+              th Name
+              th School Name
+
+          tbody
+            .roles = render user.roles
+
+      td.actions
+        a.lnk-users-edit href=edit_user_path(user) data-remote='true' Edit
+        span = ' | '
+        a.lnk-users-destroy href=user_path(user) data-method='delete' data-remote='true' Destroy

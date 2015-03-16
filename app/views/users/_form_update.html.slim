@@ -1,0 +1,24 @@
+- schools = School.all
+
+.users-form-update.well data-id=user.id
+  h2.title = "Update User #{user.name}"
+
+  = simple_form_for user, remote: true do |f|
+    = f.input :name
+    = f.input :phone
+
+    ul.nav.nav-tabs
+
+      - schools.each do |s|
+        li : a href="#tab-pane-update-#{s.id}" data-toggle='tab' = s.name
+
+      li : a href="#tab-pane-update-system" data-toggle='tab' System
+
+    .tab-content
+
+      - schools.each do |s|
+        .tab-pane id="tab-pane-update-#{s.id}" = f.association :roles, collection: s.roles, as: :check_boxes
+
+      .tab-pane id="tab-pane-update-system" = f.association :roles, collection: Role.where(name: 'Admin'), as: :check_boxes
+
+    .actions.pull-right = f.button :submit, class: 'btn-primary'
